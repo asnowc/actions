@@ -1,0 +1,16 @@
+name: "Setup ssh"
+description: "设置 ssh 环境"
+inputs:
+    private_key:
+        description: ssh 私钥
+        required: false
+runs:
+    using: "composite"
+    steps:
+        - name: Set private key
+          if: ${{inputs.private_key}}
+          shell: bash
+          run: |
+              mkdir -p ~/.ssh/
+              echo "${{ inputs.private_key }}" > ~/.ssh/id_rsa
+              chmod 600 ~/.ssh/id_rsa
