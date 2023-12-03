@@ -1,0 +1,15 @@
+name: "ssh-exec"
+description: "执行 ssh 远程命令"
+inputs:
+    host:
+        description: 用户名和远程主机地址
+        required: true
+    command:
+        description: 命令
+        required: true
+runs:
+    using: "composite"
+    steps:
+        - name: ssh exec
+          shell: bash
+          run: ssh -o StrictHostKeyChecking=no ${{inputs.host}} 'source .profile;${{inputs.command}}'
