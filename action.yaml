@@ -1,38 +1,28 @@
 name: "Setup node env"
 description: "设置分支和node、pnpm开发环境"
 inputs:
-    pnpm_v:
-        description: pnpm 版本
-        required: true
-    node_v:
-        description: node 版本
-        required: true
-    run_install:
-        description: 是否运行pnpm install
-    ignore_git_file_mode:
-        description: 忽略 git 的 file mode 变化
-        default: "true"
+  pnpm_v:
+    description: pnpm 版本
+    required: true
+  node_v:
+    description: node 版本
+    required: true
+  run_install:
+    description: 是否运行pnpm install
 runs:
-    using: "composite"
-    steps:
-        - name: Git checkout
-          uses: actions/checkout@v3
-
-        - name: Setup pnpm
-          uses: pnpm/action-setup@v2
-          with:
-              version: ${{ inputs.pnpm_v }}
-        - name: Use NodeJS
-          uses: actions/setup-node@v3
-          with:
-              node-version: ${{ inputs.node_v }}
-              registry-url: https://registry.npmjs.org
-              cache: pnpm
-        - name: Ignore git file mode change
-          shell: bash
-          if: ${{ inputs.ignore_git_file_mode == 'true' }}
-          run: git config core.filemode false
-        - name: Run install
-          shell: bash
-          run: pnpm install
-          if: ${{ inputs.run_install }}
+  using: "composite"
+  steps:
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: ${{ inputs.pnpm_v }}
+    - name: Setup NodeJS
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node_v }}
+        registry-url: https://registry.npmjs.org
+        cache: pnpm
+    - name: Run install
+      shell: bash
+      run: pnpm install
+      if: ${{ inputs.run_install }}
