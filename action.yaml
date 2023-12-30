@@ -13,9 +13,7 @@ inputs:
   compression-level:
     description: 压缩等级
     required: false
-  root:
-    description: 根目录
-    required: false
+
 runs:
   using: "composite"
   steps:
@@ -35,4 +33,3 @@ runs:
         retention-days: ${{inputs.retention-days}}
         compression-level: ${{inputs.compression-level}}
         path: ${{steps.get-pattern.outputs.FILES}}
-      working-directory: ${{inputs.root}}
