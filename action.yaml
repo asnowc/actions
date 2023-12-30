@@ -1,0 +1,38 @@
+name: "Upload artifact"
+description: "使用文件列表上传工件"
+inputs:
+  path:
+    description: 文件列表路径
+    required: true
+  name:
+    description: 名称
+    required: true
+  retention-days:
+    description: 保留时长
+    required: false
+  compression-level:
+    description: 压缩等级
+    required: false
+  root:
+    description: 根目录
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Get pattern
+      shell: bash
+      run: |
+        {
+          echo 'FILES<<EOF'
+          node "$GITHUB_ACTION_PATH/get_pattern.mjs" ${{inputs.path}}
+          echo EOF
+        } >> "$GITHUB_OUTPUT"
+      id: get-pattern
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{inputs.name}}
+        retention-days: ${{inputs.retention-days}}
+        compression-level: ${{inputs.compression-level}}
+        path: ${{steps.get-pattern.outputs.FILES}}
+      working-directory: ${{inputs.root}}
