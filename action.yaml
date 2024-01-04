@@ -1,0 +1,27 @@
+name: "Deno script"
+description: "执行 Deno 代码"
+inputs:
+  script:
+    description: Deno 代码
+    required: true
+  scriptArgs:
+    description: 自定义参数，包括权限等
+    required: false
+  args:
+    description: 脚本参数
+    default: ""
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create file
+      shell: bash
+      run: deno run -A "$GITHUB_ACTION_PATH/setup.ts"
+      env:
+        SCRIPT: ${{inputs.script}}
+    - name: Deno run
+      shell: bash
+      run: |
+        echo ::group:: Cache Dependency
+        deno run ${{inputs.args}} "$GITHUB_ACTION_PATH/main.ts" ${{inputs.scriptArgs}}
