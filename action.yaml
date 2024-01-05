@@ -5,13 +5,16 @@ inputs:
     description: Deno 代码
     required: true
   scriptArgs:
-    description: 自定义参数，包括权限等
+    description: 传递给脚本的参数
     required: false
   args:
-    description: 脚本参数
+    description: 传递给 deno run 的参数
     default: ""
     required: false
-
+outputs:
+  return:
+    description: 脚本的返回值
+    value: ${{steps.run_script.outputs.return}}
 runs:
   using: "composite"
   steps:
@@ -22,6 +25,7 @@ runs:
         SCRIPT: ${{inputs.script}}
     - name: Deno run
       shell: bash
+      id: run_script
       run: |
         echo ::group:: Cache Dependency
         deno run ${{inputs.args}} "$GITHUB_ACTION_PATH/main.ts" ${{inputs.scriptArgs}}
