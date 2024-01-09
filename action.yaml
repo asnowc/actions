@@ -20,7 +20,7 @@ runs:
   steps:
     - name: Create file
       shell: bash
-      run: deno run -A "$GITHUB_ACTION_PATH/setup.ts"
+      run: deno run -A --no-lock "$GITHUB_ACTION_PATH/setup.ts"
       env:
         SCRIPT: ${{inputs.script}}
     - name: Deno run
