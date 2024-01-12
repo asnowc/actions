@@ -7,16 +7,15 @@ import path from "node:path";
 await main();
 
 async function main() {
-  const file = getInput("json");
+  const file = getInput("file");
   /** @type {string[]} */
   let versions;
-  if (file.startsWith(".") || file.startsWith("/")) {
-    const field = getInput("field");
-    const prefix = getInput("prefix");
-    versions = await getVersion(file, field, prefix);
-  } else {
-    versions = await getPreset(file);
-  }
+
+  const field = getInput("field");
+  const prefix = getInput("prefix");
+  versions = await getVersion(file, field, prefix);
+
+  // versions = await getPreset(file);
 
   versions = await filterNoExistTags(versions);
   if (versions.length) {
