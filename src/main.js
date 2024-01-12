@@ -19,7 +19,12 @@ async function main() {
   }
 
   versions = await filterNoExistTags(versions);
-  setOutput("tags", JSON.stringify(versions));
+  if (versions.length) {
+    setOutput("tags", JSON.stringify(versions));
+    console.log("Tags: " + versions.join(", "));
+  } else {
+    console.log("No tags");
+  }
 }
 
 /**
