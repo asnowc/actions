@@ -2,7 +2,7 @@ name: "Check tags"
 description: "检测仓库标签是否存在"
 inputs:
   file:
-    description: JSON文件地址
+    description: 版本文件路径
     required: true
   field:
     description: 版本字段
@@ -14,7 +14,7 @@ inputs:
     default: "v",
   preset:
     required: false
-    description: 版本标签前缀
+    description: 使用预设
 outputs:
   tags:
     description: 不存在的标签列表，格式为一个字符串数组的JSON文本
