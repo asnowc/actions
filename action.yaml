@@ -9,7 +9,7 @@ inputs:
     required: false
     default: "version"
   prefix:
-    description: 合并前缀
+    description: 版本标签前缀
     required: false
     default: "v"
 outputs:

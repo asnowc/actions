@@ -10,7 +10,6 @@ async function main() {
   const file = getInput("json");
   /** @type {string[]} */
   let versions;
-  let json;
   if (file.startsWith(".") || file.startsWith("/")) {
     const field = getInput("field");
     const prefix = getInput("prefix");
