@@ -11,7 +11,10 @@ inputs:
   prefix:
     description: 版本标签前缀
     required: false
-    default: "v"
+    default: "v",
+  preset:
+    required: false
+    description: 版本标签前缀
 outputs:
   tags:
     description: 不存在的标签列表，格式为一个字符串数组的JSON文本

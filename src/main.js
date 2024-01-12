@@ -2,18 +2,23 @@
 import { getInput, setOutput } from "@actions/core";
 import { readfile } from "./readfile.js";
 import { filterNoExistTags } from "./github.js";
+import { getWorkspaceTags } from "./npm.js";
 import path from "node:path";
 
 await main();
 
 async function main() {
   const file = getInput("file");
+  const preset = getInput("preset");
   /** @type {string[]} */
   let versions;
-
-  const field = getInput("field");
-  const prefix = getInput("prefix");
-  versions = await getVersion(file, field, prefix);
+  if (preset) {
+    versions = await getPreset(preset);
+  } else {
+    const field = getInput("field");
+    const prefix = getInput("prefix");
+    versions = await getVersion(file, field, prefix);
+  }
 
   // versions = await getPreset(file);
 
@@ -53,6 +58,8 @@ async function getVersion(jsonpath, field, prefix) {
  */
 function getPreset(preset) {
   switch (preset) {
+    case "pnpm-workspace":
+      return getWorkspaceTags(getInput("file"), { subPrefix: getInput("prefix") });
     default:
       throw new Error("不支持预设：" + preset);
   }
