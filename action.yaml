@@ -1,0 +1,21 @@
+name: "Check tags"
+description: "检测仓库标签是否存在"
+inputs:
+  file:
+    description: JSON文件地址
+    required: true
+  field:
+    description: 版本字段
+    required: false
+    default: "version"
+  prefix:
+    description: 合并前缀
+    required: false
+    default: "v"
+outputs:
+  tags:
+    description: 不存在的标签列表，格式为一个字符串数组的JSON文本
+    value: ${{steps.run_script.outputs.return}}
+runs:
+  using: "node20"
+  main: index.mjs
