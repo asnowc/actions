@@ -11,7 +11,7 @@ inputs:
   prefix:
     description: 版本标签前缀
     required: false
-    default: "v",
+    default: "v"
   preset:
     required: false
     description: 使用预设
