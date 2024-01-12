@@ -5,11 +5,12 @@ const [GITHUB_OWNER, GITHUB_REPO] = env.GITHUB_REPOSITORY?.split("/") ?? [];
 
 /**
  * @param {string[]} tags
+ * @param { string} [prefix]
  * @returns {Promise<string[]>}
  */
-export async function filterNoExistTags(tags) {
+export async function filterNoExistTags(tags, prefix) {
   if (tags.length === 0) return [];
-  const allTags = new Set(await githubRepo.listGitHubTags());
+  const allTags = new Set(await githubRepo.listGitHubTags(prefix));
   return tags.filter((tag) => !allTags.has(tag));
 }
 
@@ -17,7 +18,7 @@ class GithubRepo {
   /**
    * @param {string} repo
    * @param {string} owner
-   * @param {string|void} token
+   * @param {string} [token]
    */
   constructor(owner, repo, token) {
     this.owner = owner;
